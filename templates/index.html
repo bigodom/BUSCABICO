@@ -8,9 +8,33 @@
     <title>Principal</title>
 </head>
 <body>
-    <div class="page-header">
-        <h1>Titulo</h1>
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ titulo }}</h1>
+        </div>
+        <table class="table table-striped table-responsive table-bordered">
+            <thead class="thead-default">
+                <tr>
+                    <th>Nome</th>
+                    <th>Trabalho</th>
+                    <th>Cidade</th>
+                    <th>Bairro</th>
+                    <th>Telefone</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cadastro in cadastrados %}
+                <tr>
+                    <td>{{ cadastro.nome }}</td>
+                    <td>{{ cadastro.trabalho }}</td>
+                    <td>{{ cadastro.cidade }}</td>
+                    <td>{{ cadastro.bairro }}</td>
+                    <td>{{ cadastro.telefone }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
     </div>
-    <h1>ola mundo!</h1>
 </body>
 </html>
