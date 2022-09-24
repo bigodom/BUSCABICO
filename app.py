@@ -9,6 +9,19 @@ class Cadastro:
         self.bairro = bairro
         self.telefone = telefone
 
+class Usuario:
+    def __init__(self, nome, nickname, senha):
+        self.nome = nome
+        self.nickname = nickname
+        self.senha = senha
+
+usuario1 = Usuario("Pedro", 'bigodom', 'pedro123')
+usuario2 = Usuario("Guilherme", 'teste', 'teste')
+usuario3 = Usuario("Mateus", 'teste2', 'teste2')
+
+usuarios = {usuario1.nickname : usuario1,
+            usuario2.nickname : usuario2,
+            usuario3.nickname : usuario3 }
 
 cadastro1 = Cadastro('Pedro', 'pedreiro', 'João Monlevade', 'industrial', '31912341234')
 lista = [cadastro1]
@@ -22,10 +35,10 @@ def index():
 
 
 @app.route('/cadastro')
-def registro():
+def cadastro():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect(url_for('login', proxima=url_for('registro')))
-    return render_template('registro.html', titulo='Cadastro')
+        return redirect(url_for('login', proxima=url_for('cadastro')))
+    return render_template('cadastro.html', titulo='Cadastro')
 
 
 @app.route('/criar', methods=['POST', ])
@@ -49,11 +62,13 @@ def login():
 
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
-    if '123' == request.form['senha']:
-        session['usuario_logado'] = request.form['usuario']
-        flash(session['usuario_logado'] + ' logado com sucesso!')
-        proxima_pagina = request.form['proxima']
-        return redirect(proxima_pagina)
+    if request.form['usuario'] in usuarios:
+        usuario = usuarios[request.form['usuario']]
+        if request.form['senha'] == usuario.senha:
+            session['usuario_logado'] = usuario.nickname
+            flash(usuario.nickname + ' logado com sucesso!')
+            proxima_pagina = request.form['proxima']
+            return redirect(proxima_pagina)
     else:
         flash('Usuário não reconhecido')
         return redirect(url_for('login'))
