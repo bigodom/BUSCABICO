@@ -9,11 +9,13 @@ class Cadastro:
         self.bairro = bairro
         self.telefone = telefone
 
+
 class Usuario:
     def __init__(self, nome, nickname, senha):
         self.nome = nome
         self.nickname = nickname
         self.senha = senha
+
 
 usuario1 = Usuario("Pedro", 'bigodom', 'pedro123')
 usuario2 = Usuario("Guilherme", 'teste', 'teste')
@@ -29,6 +31,7 @@ lista = [cadastro1]
 app = Flask(__name__)
 app.secret_key = 'malvadao'
 
+
 @app.route('/')
 def index():
     return render_template('index.html', titulo='Cadastrados', cadastrados=lista)
@@ -36,7 +39,7 @@ def index():
 
 @app.route('/cadastro')
 def cadastro():
-    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
         return redirect(url_for('login', proxima=url_for('cadastro')))
     return render_template('cadastro.html', titulo='Cadastro')
 
