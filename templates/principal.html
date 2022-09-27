@@ -1,0 +1,26 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" style="padding-left: 5%;">BUSCA BICO</a>
+    <button class="navbar-toggler" style="margin-right: 5%;" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Alterna navegação">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(Página atual)</span></a>
+        <a class="nav-item nav-link" href="#">Destaques</a>
+        <a class="nav-item nav-link" href="#">Preços</a>
+        <a class="nav-item nav-link disabled" href="#">Desativado</a>
+      </div>
+      <div class="navbar">
+        <form class="container-fluid justify-content-start">
+            <button class="btn btn-outline-success me-2" type="button">Entrar</button>
+            <button class="btn btn-outline-success me-2" type="button">Cadastrar</button>
+        </form>
+    </div>
+    </div>
+
+  </nav>
+
+{% endblock %}
