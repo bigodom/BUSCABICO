@@ -1,0 +1,19 @@
+.ache-emprego{
+    margin-top: 2em;
+    margin: 2%;
+    display: flex;
+    align-items: center;
+}
+.ache-emprego h1{
+    margin-right: 3%;
+    width: 60%;
+    text-align: center;
+}
+@media (max-width: 700px) {
+    .ache-emprego{
+        flex-direction: column;
+    }
+    .ache-emprego img{
+        min-width: 60%;
+    }
+}
