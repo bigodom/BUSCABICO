@@ -1,7 +1,7 @@
 {% extends "template.html" %}
 {% block conteudo %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-fill">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-fill">
     <a class="navbar-brand" href="#" style="padding-left: 3%;">
       <img src="../static/BuscaBicoLogo.jpeg" style="width: 166px; height: 52px;" alt="">
     </a>
@@ -22,12 +22,52 @@
     </div>
     </div>
   </nav>
-  <div>
-    <div class="ache-emprego">
-      <h1>Divulgue aqui o seu serviço e seja contratado rapidamente</h1>
-      <img src="../static/ProcurarEmprego.jpeg" alt="" style="max-width: 40%;">
-    </div>
-    
+
+  <div class="ache-emprego">
+    <h1>Divulgue aqui o seu serviço e seja contratado rapidamente!
+      <br><button class="btn btn-outline-success" type="button">Encontre sua vaga</br></button>
+    </h1>
+      
+    <img src="../static/ProcurarEmprego.jpeg" alt="" style="max-width: 40%;">
   </div>
+
+<div class="tutorial">
+    <div class="blocos">
+      <h4>Crie uma conta grátis</h4>
+      <p>Você só precisa de um endereço de e-mail para criar uma conta e começar a criar um anúncio de vaga de emprego.</p>
+    </div>
+    <div class="blocos">
+      <h4>Crie um anúncio de serviço</h4>
+      <p>Inclua um título, uma descrição e um local no anúncio de vaga de emprego.</p>
+    </div>
+    <div class="blocos">
+      <h4>Anuncie um serviço</h4>
+      <p>Depois de anunciar sua vaga, use nossas ferramentas inovadoras para ajudar a encontrar os talentos ideais.</p>
+    </div>
+  </div>
+
+  <div class="depoimento">
+    <div class="texto">
+      <blockquote class="callout quote EN">
+        Its good to meet you, Dr. Banner. Your work on anti-electron collisions is unparalleled. And Im a huge fan of the way you lose control and turn into an enormous green rage monster.
+        <cite> - Tony Stark</cite>
+      </blockquote>
+    </div>
+    <div>
+      <img src="../static/pedreiro.jpg" alt="">
+    </div>
+  </div>
+
+  <div class="ajuda-contato container">
+    <div class="ajuda">
+      <h4>Estamos aqui para ajudar</h4>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis dolore blanditiis voluptatibus beatae aperiam nisi atque id voluptatum ut corporis asperiores, quam tempore cupiditate debitis sapiente suscipit reiciendis exercitationem nostrum!</p>
+    </div>
+    <div class="contato">
+      <h6>Entre em contato</h6>
+      <img src="../static/whatsapp-logo.png" alt="">
+      <img src="../static/Instagram-logo.png" alt="">
+    </div>
+</div>
 
 {% endblock %}
