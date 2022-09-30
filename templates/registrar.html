@@ -1,10 +1,6 @@
 {% extends "template.html" %}
 {% block conteudo %}
-<!--
-<div class="page-header">
-    <h1>{{ titulo }}</h1>
-</div>
--->
+
 {% with messages = get_flashed_messages() %}
 {% if messages %}
     <ul id="messages" class="list-unstyled">
@@ -14,26 +10,21 @@
     </ul>
 {% endif %}
 {% endwith %}
-<!--  
-<a class="navbar-brand" href="/" style="padding-left: 3%;">
-    <img src="../static/BuscaBicoLogo.jpeg" style="width: 166px; height: 52px;" alt="">
-</a>
--->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-fill">
     <a class="navbar-brand" href="/" style="padding-left: 3%;">
       <img src="../static/BuscaBicoLogo.jpeg" style="width: 166px; height: 52px;" alt="">
     </a>
   </nav>
-
 <div class="login">
-    <h1>Faça seu login</h1>
+    <h1>Registre-se</h1>
         <form method="POST" action="{{ url_for('autenticar') }}">
             <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
             <p><label>Nome de usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
             <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
-            <p><button class="btn btn-primary" type="submit">Entrar</button></p>
-            
+            <p><button class="btn btn-primary" type="submit">Registrar</button></p>
         </form>
-        <a href="/registrar"><p><button class="btn btn-primary" type="submit">Registar</button></p></a>
+        <a href="/login"><p><button class="btn btn-primary" type="submit">Logar</button></p></a>
 </div>
+
 {% endblock %}

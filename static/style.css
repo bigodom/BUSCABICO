@@ -148,21 +148,23 @@ body{
     }
     .ajuda-contato .ajuda{
         min-width: 80vw;
+        text-align: center;
+        padding-left: 12vw;
     }
     .ajuda-contato .contato h6{
         width: 50vw;
         margin-top: 8px;
-        text-align: center;
     }
     .ajuda-contato .contato{
         margin-top: 8vw;
         display: -webkit-box;
+        text-align: center;
     }
     /*PAGINA LOGIN*/
     .login{
         padding: 5%;
         margin: 0%;
-        
+        width: 100vw;
     }
 }
 
