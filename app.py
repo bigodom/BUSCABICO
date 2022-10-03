@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+import psycopg2
+from psycopg2 import OperationalError
 
 
 class Cadastro:
@@ -30,6 +32,50 @@ lista = [cadastro1]
 
 app = Flask(__name__)
 app.secret_key = 'malvadao'
+
+def create_connection():
+    connection = None
+    try:
+        connection = psycopg2.connect(
+            database="postgres",
+            user="postgres",
+            password="123",
+            host="127.0.0.1",
+            port="5432"
+        )
+        print("Connection to PostgreSQL DB successful")
+    except OperationalError as e:
+        print(f"The error '{e}' ocurred")
+    return connection
+
+
+_email = ''
+_username = ''
+
+
+
+def selecao(connection, query):
+    cursor = connection.cursor()
+    result = None
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        return result
+    except OperationalError as e:
+        print(f"The error '{e}' occurred")
+
+
+def execute_query(connection, query):
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query)
+        connection.commit()
+        print("Query executed successfully")
+    except OperationalError as e:
+        print(f"The error '{e}' occurred")
+
+
+connection = create_connection()
 
 
 @app.route('/')
