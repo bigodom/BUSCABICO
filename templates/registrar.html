@@ -18,9 +18,9 @@
   </nav>
 <div class="login">
     <h1>Registre-se</h1>
-        <form method="POST" action="{{ url_for('autenticar') }}">
+        <form method="POST">
             <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
-            <p><label>Nome de usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
+            <p><label>Nome:</label> <input class="form-control" type="text" name="nome" required></p>
             <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
             <p><button class="btn btn-primary" type="submit">Registrar</button></p>
         </form>

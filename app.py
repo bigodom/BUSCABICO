@@ -1,40 +1,43 @@
+from datetime import date
+from click import echo
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+import os
 import psycopg2
 from psycopg2 import OperationalError
 
 
-class Cadastro:
-    def __init__(self, nome, trabalho, cidade, bairro, telefone):
-        self.nome = nome
-        self.trabalho = trabalho
-        self.cidade = cidade
-        self.bairro = bairro
-        self.telefone = telefone
+# class Cadastro:
+#     def __init__(self, nome, trabalho, cidade, bairro, telefone):
+#         self.nome = nome
+#         self.trabalho = trabalho
+#         self.cidade = cidade
+#         self.bairro = bairro
+#         self.telefone = telefone
 
 
-class Usuario:
-    def __init__(self, nome, nickname, senha):
-        self.nome = nome
-        self.nickname = nickname
-        self.senha = senha
+# class Usuario:
+#     def __init__(self, nome, nickname, senha):
+#         self.nome = nome
+#         self.nickname = nickname
+#         self.senha = senha
 
 
-usuario1 = Usuario("Pedro", 'bigodom', 'pedro123')
-usuario2 = Usuario("Guilherme", 'teste', 'teste')
-usuario3 = Usuario("Mateus", 'teste2', 'teste2')
+# usuario1 = Usuario("Pedro", 'bigodom', 'pedro123')
+# usuario2 = Usuario("Guilherme", 'teste', 'teste')
+# usuario3 = Usuario("Mateus", 'teste2', 'teste2')
 
-usuarios = {usuario1.nickname : usuario1,
-            usuario2.nickname : usuario2,
-            usuario3.nickname : usuario3 }
+# usuarios = {usuario1.nickname : usuario1,
+#             usuario2.nickname : usuario2,
+#             usuario3.nickname : usuario3 }
 
-cadastro1 = Cadastro('Pedro', 'pedreiro', 'João Monlevade', 'industrial', '31912341234')
-lista = [cadastro1]
+# cadastro1 = Cadastro('Pedro', 'pedreiro', 'João Monlevade', 'industrial', '31912341234')
+# lista = [cadastro1]
+
 
 app = Flask(__name__)
 app.secret_key = 'malvadao'
 
 def create_connection():
-    connection = None
     try:
         connection = psycopg2.connect(
             database="postgres",
@@ -43,20 +46,13 @@ def create_connection():
             host="127.0.0.1",
             port="5432"
         )
-        print("Connection to PostgreSQL DB successful")
+        print("conn to PostgreSQL DB successful")
     except OperationalError as e:
         print(f"The error '{e}' ocurred")
     return connection
 
-
-_email = ''
-_username = ''
-
-
-
 def selecao(connection, query):
     cursor = connection.cursor()
-    result = None
     try:
         cursor.execute(query)
         result = cursor.fetchall()
@@ -64,8 +60,7 @@ def selecao(connection, query):
     except OperationalError as e:
         print(f"The error '{e}' occurred")
 
-
-def execute_query(connection, query):
+def execute_query (connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
@@ -75,9 +70,6 @@ def execute_query(connection, query):
         print(f"The error '{e}' occurred")
 
 
-connection = create_connection()
-
-
 @app.route('/')
 def principal():
     return render_template('principal.html', titulo='homepage')
@@ -85,7 +77,14 @@ def principal():
 
 @app.route('/index')
 def index():
-    return render_template('index.html', titulo='Cadastrados', cadastrados=lista)
+    conn = create_connection()
+    cur = conn.cursor()
+    cur.execute(f'''SELECT * FROM Trabalhador;''')
+    conn.commit()
+    trabalhador = cur.fetchall()
+    cur.close()
+    conn.close()
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador)
 
 
 @app.route('/cadastro')
@@ -97,14 +96,30 @@ def cadastro():
 
 @app.route('/criar', methods=['POST', ])
 def criar():
-    nome = request.form['nome']
-    trabalho = request.form['trabalho']
-    cidade = request.form['cidade']
-    bairro = request.form['bairro']
-    telefone = request.form['telefone']
 
-    cadastro = Cadastro(nome, trabalho, cidade, bairro, telefone)
-    lista.append(cadastro)
+    if request.method == 'POST':
+        nome = request.form['nome']
+        sobrenome = request.form['sobrenome']
+        senha = request.form['senha']
+        endereco = request.form['endereco']
+        email = request.form['email']
+    
+    today = date.today()
+
+    cadastro = (
+        f'''
+        INSERT INTO Trabalhador
+        VALUES ('{email}', '{today}', '{senha}', '{nome}', '{sobrenome}', '{endereco}')
+        '''
+    ) 
+    connection = create_connection()
+    try:
+        execute_query(connection, cadastro)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    #cadastro = Cadastro(nome, trabalho, cidade, bairro, telefone)
+    #lista.append(cadastro)
     return redirect(url_for('index'))
 
 
@@ -115,6 +130,23 @@ def login():
 
 @app.route('/registrar')
 def registrar():
+
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        senha = request.form['senha']
+        confSenha = request.form['confSenha']
+
+        if confSenha != senha:
+            flash('As senhas são diferentes. Tente novamente')
+            return render_template('registrar.html')
+        else:
+            usuario = (
+                f'''
+                Select  T.pnome
+                '''
+            )
+
     return render_template('registrar.html')
 
 @app.route('/autenticar', methods=['POST', ])
