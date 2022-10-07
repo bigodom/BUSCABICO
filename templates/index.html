@@ -38,19 +38,19 @@
 
 {% for trabalhador in trabalhador %}
 <div class="container index-blocos">
-    <div class="index-nome-trabalho index-bloco">
-        <h5>Nome</h1>
-        <p>{{ trabalhador[3] }}</p>
+    <div class="index-nome-trabalhador index-bloco">
+        <h5>{{ trabalhador[1] }} {{ trabalhador[2] }}</h1>
+        <h5>{{ trabalhador[5] }}</h5>
     </div>
     <div class="index-endereco index-bloco">
         <h5>Endereço</h1>
-        <p>{{ trabalhador[5] }}</p>
+        <p>{{ trabalhador[3] }}</p>
+    </div>
+    <div class="index-email index-bloco">
+        <h5>Email</h1>
+        <p>{{ trabalhador[4] }}</p>
     </div>
     <div class="index-data-cadastro index-bloco">
-        <h5>Email</h1>
-        <p>{{ trabalhador[0] }}</p>
-    </div>
-    <div class="contato index-bloco">
         <h5>Data de Cadastro</h1>
         <p>{{ trabalhador[1] }}</p>
     </div>

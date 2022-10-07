@@ -1,37 +1,8 @@
 from datetime import date
 from click import echo
 from flask import Flask, render_template, request, redirect, session, flash, url_for
-import os
 import psycopg2
 from psycopg2 import OperationalError
-
-
-# class Cadastro:
-#     def __init__(self, nome, trabalho, cidade, bairro, telefone):
-#         self.nome = nome
-#         self.trabalho = trabalho
-#         self.cidade = cidade
-#         self.bairro = bairro
-#         self.telefone = telefone
-
-
-# class Usuario:
-#     def __init__(self, nome, nickname, senha):
-#         self.nome = nome
-#         self.nickname = nickname
-#         self.senha = senha
-
-
-# usuario1 = Usuario("Pedro", 'bigodom', 'pedro123')
-# usuario2 = Usuario("Guilherme", 'teste', 'teste')
-# usuario3 = Usuario("Mateus", 'teste2', 'teste2')
-
-# usuarios = {usuario1.nickname : usuario1,
-#             usuario2.nickname : usuario2,
-#             usuario3.nickname : usuario3 }
-
-# cadastro1 = Cadastro('Pedro', 'pedreiro', 'João Monlevade', 'industrial', '31912341234')
-# lista = [cadastro1]
 
 
 app = Flask(__name__)
@@ -69,17 +40,27 @@ def execute_query (connection, query):
     except OperationalError as e:
         print(f"The error '{e}' occurred")
 
+connection = create_connection()
+
 
 @app.route('/')
 def principal():
-    return render_template('principal.html', titulo='homepage')
+    return render_template('principal.html')
 
 
 @app.route('/index')
 def index():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        return redirect(url_for('login', proxima=url_for('cadastro')))
+
     conn = create_connection()
     cur = conn.cursor()
-    cur.execute(f'''SELECT * FROM Trabalhador;''')
+    cur.execute(
+    f'''
+    SELECT * 
+    FROM trabalhador t, oferece o
+    WHERE t.fk_uemail = o.fk_temail;
+    ''')
     conn.commit()
     trabalhador = cur.fetchall()
     cur.close()
@@ -100,39 +81,85 @@ def criar():
     if request.method == 'POST':
         nome = request.form['nome']
         sobrenome = request.form['sobrenome']
-        senha = request.form['senha']
+        trabalho = request.form['trabalho']
         endereco = request.form['endereco']
         email = request.form['email']
     
     today = date.today()
 
-    cadastro = (
+    cadastro3 = (
         f'''
-        INSERT INTO Trabalhador
-        VALUES ('{email}', '{today}', '{senha}', '{nome}', '{sobrenome}', '{endereco}')
+        INSERT INTO trabalho
+        SELECT '{trabalho}'
+        WHERE NOT EXISTS (SELECT 1 FROM trabalho WHERE tipo = '{trabalho}')
         '''
-    ) 
-    connection = create_connection()
+    )
     try:
-        execute_query(connection, cadastro)
+        execute_query(connection, cadastro3)
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
+
+
+
+    confereEmail = (
+        f'''
+        SELECT  t.fk_uemail
+        FROM    trabalhador t
+        WHERE   t.fk_uemail like '{email}'
+        '''
+    )
+    try:
+        resultado = selecao(connection, confereEmail)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+    if resultado:
+        echo("O email ja foi cadastrado.")
+    else:
+        cadastroTrabalhador = (
+        f'''
+        INSERT INTO Trabalhador
+        VALUES ('{today}', '{nome}', '{sobrenome}', '{endereco}', '{email}')
+        '''
+        ) 
+        try:
+            execute_query(connection, cadastroTrabalhador)
+        except OperationalError as e:
+            echo(f'O erro {e} ocorreu. Tente novamente.')
+        cadastro2 = (
+        f'''
+        INSERT INTO oferece
+        VALUES ('{trabalho}', '{email}', 'TRUE')
+        '''
+        )
+        try:
+            execute_query(connection, cadastro2)
+        except OperationalError as e:
+            echo(f'O erro {e} ocorreu. Tente novamente.')
+        return redirect(url_for('index'))
+
+
+
     #cadastro = Cadastro(nome, trabalho, cidade, bairro, telefone)
     #lista.append(cadastro)
-    return redirect(url_for('index'))
+    flash('Email já cadastrado')
+    return redirect(url_for('cadastro'))
 
 
 @app.route('/login')
 def login():
-    proxima = request.args.get('proxima')
-    return render_template('login.html', proxima=proxima)
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        proxima = request.args.get('proxima')
+        return render_template('login.html', proxima=proxima)
+    
+    flash('Você já está logado')
+    return redirect(url_for('principal'))
 
-@app.route('/registrar')
+
+@app.route('/registrar', methods=['POST', ])
 def registrar():
 
     if request.method == 'POST':
-        nome = request.form['nome']
         email = request.form['email']
         senha = request.form['senha']
         confSenha = request.form['confSenha']
@@ -151,15 +178,28 @@ def registrar():
 
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
-    if request.form['usuario'] in usuarios:
-        usuario = usuarios[request.form['usuario']]
-        if request.form['senha'] == usuario.senha:
-            session['usuario_logado'] = usuario.nickname
-            flash(usuario.nickname + ' logado com sucesso!')
-            proxima_pagina = request.form['proxima']
-            return redirect(proxima_pagina)
+    if request.method == 'POST':
+        email = request.form['email']
+        senha = request.form['senha']
+
+    consulta = (
+        f'''
+        SELECT  u.email
+        FROM    usuario u
+        WHERE   u.email like '{email}'
+        AND     u.senha like '{senha}'
+        '''
+    )
+
+    confere = selecao(connection, consulta)
+    if confere:
+        session.permanent = True
+        session['email'] = email
+        session['senha'] = senha
+        session['usuario_logado'] = email 
+        return redirect(url_for('principal'))
     else:
-        flash('Usuário não reconhecido')
+        flash('Email ou senha não cadastrados')
         return redirect(url_for('login'))
 
 
@@ -167,6 +207,6 @@ def autenticar():
 def logout():
     session['usuario_logado'] = None
     flash('logout efetuado com sucesso')
-    return redirect(url_for('index'))
+    return redirect(url_for('principal'))
 
 app.run(debug=True)

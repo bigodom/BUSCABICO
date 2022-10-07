@@ -75,6 +75,7 @@ body{
 }
 .depoimento .texto{
     min-width: 50%;
+    align-self: center;
 }
 .depoimento img{
     width: 70%;
@@ -137,7 +138,7 @@ body{
     margin: 0;
     font-size: 20px;
 }
-.index-nome-trabalho{
+.index-nome-trabalhador{
     background-color: #a9cd7d;
     border-radius: 20px;
     
