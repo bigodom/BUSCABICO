@@ -9,15 +9,17 @@
     <h1 style="text-align: center; margin: 5vw;">{{ titulo }}</h1>
 </div>
 
-<div class="dropdown" style="display: flex; justify-content: center; padding-bottom: 8vw;">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Filtre por tipo de serviço
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        {% for trabalho in trabalho %}
-        <a class="dropdown-item" href="#" >{{ trabalho[0] }}</a>
-        {% endfor %}
-    </div>
+ <div style="display: flex; justify-content: center; padding-bottom: 8vw; max-width: 80%; align-self: center; padding-left: 20%;">
+        <form action="/index_filtro" method="post">
+        <select method="post" class="form-control" name="trabalhoFiltro">
+          {% for trabalho in trabalho %}
+          <option>{{ trabalho[0] }}</option>
+          {% endfor %}
+          
+        </select>
+        <input type="submit" name="acao" value="filtrar">
+        </form>
+        
   </div>
 
 {% for trabalhador in trabalhador %}

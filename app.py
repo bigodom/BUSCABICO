@@ -1,4 +1,5 @@
 from datetime import date
+from re import T
 from click import echo
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 import psycopg2
@@ -79,19 +80,20 @@ def index():
     return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho)
 
 
-@app.route('/index_filtro')
-def index():
-    if 'usuario_logado' not in session or session['usuario_logado'] is None:
-        return redirect(url_for('login', proxima=url_for('cadastro')))
+@app.route('/index_filtro', methods=['POST'])
+def index_filtro():
 
-    tipoTrabalho
+
+    if request.method == 'POST':
+        trabalhoFiltro = request.form['trabalhoFiltro']
+
     trabalhador = (
     f'''
     SELECT * 
     FROM trabalhador t, oferece o
-    WHERE t.fk_uemail = o.fk_temail AND o.tipo = {tipoTrabalho};
+    WHERE t.fk_uemail = o.fk_temail AND o.fk_trabalhador_tipo iLIKE '{trabalhoFiltro}';
     ''')
-    
+
     try:
         trabalhador = selecao(connection, trabalhador)
     except OperationalError as e:
