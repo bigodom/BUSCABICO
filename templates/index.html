@@ -8,33 +8,17 @@
 <div class="page-header">
     <h1 style="text-align: center; margin: 5vw;">{{ titulo }}</h1>
 </div>
-        <!-- <table class="table table-striped table-responsive table-bordered" style="color:white">
-            <div style="background-color: green;">
-            <thead class="thead-default">
-                {% for trabalhador in trabalhador %}
-                
-                <tr>
-                    <th>Nome</th>
-                    <th>Endereço</th>
-                    <th>Email</th>
-                    <th>Data de Cadastro</th>
-                </tr>
-                
-            </thead>
-            <tbody>
-                
-                <tr>
-                    <td style="color:white">{{ trabalhador[3] }} {{ trabalhador[4] }}</td>
-                    <td style="color:white">{{ trabalhador[5] }}</td>
-                    <td style="color:white">{{ trabalhador[0] }}</td>
-                    <td style="color:white">{{ trabalhador[1] }}</td>
-                </tr>
-                
-                {% endfor %}
-            </tbody>
-            </div>
 
-        </table> -->
+<div class="dropdown" style="display: flex; justify-content: center; padding-bottom: 8vw;">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Filtre por tipo de serviço
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {% for trabalho in trabalho %}
+        <a class="dropdown-item" href="#">{{ trabalho[0] }}</a>
+        {% endfor %}
+    </div>
+  </div>
 
 {% for trabalhador in trabalhador %}
 <div class="container index-blocos">
@@ -52,7 +36,7 @@
     </div>
     <div class="index-data-cadastro index-bloco">
         <h5>Data de Cadastro</h1>
-        <p>{{ trabalhador[1] }}</p>
+        <p>{{ trabalhador[0] }}</p>
     </div>
 </div>
 {% endfor %}

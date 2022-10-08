@@ -53,26 +53,37 @@ def index():
     if 'usuario_logado' not in session or session['usuario_logado'] is None:
         return redirect(url_for('login', proxima=url_for('cadastro')))
 
-    conn = create_connection()
-    cur = conn.cursor()
-    cur.execute(
+    trabalhador = (
     f'''
     SELECT * 
     FROM trabalhador t, oferece o
     WHERE t.fk_uemail = o.fk_temail;
     ''')
-    conn.commit()
-    trabalhador = cur.fetchall()
-    cur.close()
-    conn.close()
-    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador)
+    
+    try:
+        trabalhador = selecao(connection, trabalhador)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    trabalho = (
+        f'''
+        SELECT *
+        FROM trabalho
+        '''
+    )
+    try:
+        trabalho = selecao(connection, trabalho)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho)
 
 
 @app.route('/cadastro')
 def cadastro():
     if 'usuario_logado' not in session or session['usuario_logado'] is None:
         return redirect(url_for('login', proxima=url_for('cadastro')))
-    return render_template('cadastro.html', titulo='Cadastro')
+    return render_template('cadastro.html')
 
 
 @app.route('/criar', methods=['POST', ])
@@ -156,25 +167,56 @@ def login():
     return redirect(url_for('principal'))
 
 
+@app.route('/registro')
+def registro():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        proxima = request.args.get('proxima')
+        return render_template('registrar.html', proxima=proxima)
+    
+    flash('Você está logado')
+    return redirect(url_for('principal'))
+
+
 @app.route('/registrar', methods=['POST', ])
 def registrar():
 
     if request.method == 'POST':
         email = request.form['email']
         senha = request.form['senha']
-        confSenha = request.form['confSenha']
+        confirmaSenha = request.form['confirmaSenha']
 
-        if confSenha != senha:
+        if confirmaSenha != senha:
             flash('As senhas são diferentes. Tente novamente')
             return render_template('registrar.html')
         else:
-            usuario = (
+            confereEmail = (
                 f'''
-                Select  T.pnome
+                SELECT  t.fk_uemail
+                FROM    trabalhador t
+                WHERE   t.fk_uemail like '{email}'
                 '''
-            )
+                )
+            try:
+                resultado = selecao(connection, confereEmail)
+            except OperationalError as e:
+                echo(f'O erro {e} ocorreu. Tente novamente.')
+            if resultado:
+                echo("O email ja foi cadastrado.")
+            else:
+                usuario = (
+                    f'''
+                    INSERT INTO usuario
+                    VALUES  ('{senha}','{email}')
+                    '''
+                )
+                try:
+                    execute_query(connection, usuario)
+                except OperationalError as e:
+                    echo(f'O erro {e} ocorreu. Tente novamente.')
+                
+                return render_template('login.html')
 
-    return render_template('registrar.html')
+    return render_template('registro.html')
 
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
@@ -205,8 +247,12 @@ def autenticar():
 
 @app.route('/logout')
 def logout():
-    session['usuario_logado'] = None
-    flash('logout efetuado com sucesso')
-    return redirect(url_for('principal'))
+    if session['usuario_logado'] == None:
+        flash('Você não está logado')
+        return redirect(url_for('principal'))
+    else:
+        session['usuario_logado'] = None
+        flash('logout efetuado com sucesso')
+        return redirect(url_for('principal'))
 
 app.run(debug=True)

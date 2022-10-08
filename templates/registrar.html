@@ -18,10 +18,11 @@
   </nav>
 <div class="login">
     <h1>Registre-se</h1>
-        <form method="POST">
+        <form method="POST" action="{{ url_for('registrar') }}">
             <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
-            <p><label>Nome:</label> <input class="form-control" type="text" name="nome" required></p>
-            <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
+            <p><label for="email">Email:</label> <input class="form-control" type="text" id="email" name="email" required></p>
+            <p><label for="senha">Senha:</label> <input class="form-control" type="password" id="senha" name="senha" required></p>
+            <p><label for="confirmaSenha">Senha:</label> <input class="form-control" type="password" id="confirmaSenha" name="confirmaSenha" required></p>
             <p><button class="btn btn-primary" type="submit">Registrar</button></p>
         </form>
         <a href="/login"><p><button class="btn btn-primary" type="submit">Logar</button></p></a>

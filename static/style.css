@@ -4,6 +4,12 @@ body{
     color: white;
 }
 /* PAGINA PRINCIPAL */
+.navbuttons{
+    gap: 1vw;
+}
+.navbutton{
+
+}
 .ache-emprego{
     margin: 2%;
     margin-top: 10vw;
@@ -20,6 +26,10 @@ body{
 .ache-emprego h1 button{
     margin-top: 5%;
     font-size: 1.3rem;
+}
+.ache-emprego .botao-principal{
+    display: flex;
+    justify-content: space-around;
 }
 
 .tutorial{
@@ -143,6 +153,7 @@ body{
     border-radius: 20px;
     
 }
+/*PAGINA /REGISTRO*/
 
 
 
@@ -160,7 +171,11 @@ body{
         min-width: 70%;
     }
     .ache-emprego h1 button{
-        margin-top: 41px;
+        margin-top: 3vw;
+    }
+    .ache-emprego .botao-principal{
+        flex-direction: column;
+        justify-content: space-around;
     }
     .tutorial{
         flex-direction: column;
