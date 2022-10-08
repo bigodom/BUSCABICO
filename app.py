@@ -79,6 +79,38 @@ def index():
     return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho)
 
 
+@app.route('/index_filtro')
+def index():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        return redirect(url_for('login', proxima=url_for('cadastro')))
+
+    tipoTrabalho
+    trabalhador = (
+    f'''
+    SELECT * 
+    FROM trabalhador t, oferece o
+    WHERE t.fk_uemail = o.fk_temail AND o.tipo = {tipoTrabalho};
+    ''')
+    
+    try:
+        trabalhador = selecao(connection, trabalhador)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    trabalho = (
+        f'''
+        SELECT *
+        FROM trabalho
+        '''
+    )
+    try:
+        trabalho = selecao(connection, trabalho)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho)
+
+
 @app.route('/cadastro')
 def cadastro():
     if 'usuario_logado' not in session or session['usuario_logado'] is None:
