@@ -9,15 +9,16 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" style="justify-content: space-between;" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Home</a>
-        <a class="nav-item nav-link active" href="#depoimento">Depoimento</a>
-        <a class="nav-item nav-link active" href="#ajuda-contato">Contato</a>
+      <div class="navbar-nav navbuttons">
+        <a class="nav-item nav-link active navbutton btn" href="#">Home</a>
+        <a class="nav-item nav-link active navbutton btn" href="#depoimento">Depoimento</a>
+        <a class="nav-item nav-link active navbutton btn" href="#ajuda-contato">Contato</a>
       </div>
       <div class="navbar ">
         <form class="container-fluid">
             <a href="/login"><button class="btn btn-outline-success me-2" type="button">Entrar</button></a>
-            <a href="/registrar"><button class="btn btn-outline-success me-2" type="button">Registrar</button></a>
+            <a href="/registro"><button class="btn btn-outline-success me-2" type="button">Registrar</button></a>
+            <a href="/logout"><button class="btn btn-outline-success me-2" type="button">Logout</button></a>
         </form>
     </div>
     </div>
@@ -25,7 +26,10 @@
 
   <div class="ache-emprego">
     <h1>Divulgue aqui o seu serviço e seja contratado rapidamente!
-      <a href="/cadastro"><br><button class="btn btn-outline-success" type="button">Divulgue seu serviço</br></button></a>
+      <div class="botao-principal">
+        <a href="/cadastro"><br><button class="btn btn-outline-success" type="button">Divulgue seu serviço</br></button></a>
+        <a href="/index"><br><button class="btn btn-outline-success" type="button">Ache um trabalhador</br></button></a>
+      </div>
     </h1>
       
     <img src="../static/ProcurarEmprego.jpeg" alt="" style="max-width: 40%;">
@@ -49,8 +53,8 @@
   <div class="depoimento" id="depoimento">
     <div class="texto">
       <blockquote class="callout quote EN">
-        Its good to meet you, Dr. Banner. Your work on anti-electron collisions is unparalleled. And Im a huge fan of the way you lose control and turn into an enormous green rage monster.
-        <cite> - Tony Stark</cite>
+        O Buscabico me ajudou a divulgar e oferecer meus serviços sem precisar de carteira assinada! Foi uma mão na roda para poder arrumar um trabalho e conseguir ganhar um dinheiro extra!
+        <cite> - Pedreiro Clovis Da Silva</cite>
       </blockquote>
     </div>
     <div>
@@ -61,12 +65,12 @@
   <div class="ajuda-contato container" id="ajuda-contato">
     <div class="ajuda">
       <h4>Estamos aqui para ajudar</h4>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis dolore blanditiis voluptatibus beatae aperiam nisi atque id voluptatum ut corporis asperiores, quam tempore cupiditate debitis sapiente suscipit reiciendis exercitationem nostrum!</p>
+      <p>Nós somos um grupo de Alunos da Universidade Federal De Ouro Preto(UFOP), do curso de sistemas de informação, e observamos que o mercado estava carente de uma ferramenta que possibilitasse com que as pessoas pudessem encontrar serviços sem carteira assinada(bicos), dessa forma decidimos desenvolver o buscabico, que tem como objetivo ajudar as pessoas que querem divulgar seus serviços e aquelas que querem buscar e contratar serviços ofertados! Além de passar nas disciplinas de Engenharia de Software e Banco de Dados I</p>
     </div>
     <div class="contato">
       <h6>Entre em contato</h6>
-      <img src="../static/whatsapp-logo.png" alt="">
-      <img src="../static/Instagram-logo.png" alt="">
+      <a href="https://web.whatsapp.com/" target="_blank"><img src="../static/whatsapp-logo.png" alt=""></a>
+      <a href="https://www.instagram.com/augusto_peu/" target="_blank"><img src="../static/Instagram-logo.png" alt=""></a>
     </div>
 </div>
 <p style="text-align: center;">Todos os direitos reservados.</p>
