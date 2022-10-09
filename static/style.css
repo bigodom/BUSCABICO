@@ -3,6 +3,7 @@ body{
     background: #27262C;
     color: white;
 }
+
 /* PAGINA PRINCIPAL */
 .navbuttons{
     gap: 1vw;
@@ -108,14 +109,6 @@ body{
 .ajuda-contato .contato{
     max-width: 40%;
 }
-/*PAGINA LOGIN*/
-.login{
-    padding: 5%;
-    /*max-width: 700px;*/
-    width: 50vw;
-    margin-left: 25vw;
-    margin-right: 25vw;
-}
 /*PAGINA INDEX (CADASTRADOS)*/
 .index-blocos{
     display: flex; 
@@ -124,7 +117,7 @@ body{
     filter: drop-shadow(0px 0px 64px rgba(0, 0, 0, 0.7));
     padding: 0px;
     border-radius: 20px;
-    background-color: rgb(167, 167, 218);
+    background-color: #627b37;
     
 }
 .index-blocos .index-bloco{
@@ -150,8 +143,26 @@ body{
     border-radius: 20px;
     
 }
+.filtros{
+    display: flex;
+    justify-content: space-between;
+    max-width: 80%;
+    align-self: center;
+    padding-left: 20%;
+    padding-bottom: 8vw;
+}
+.limparFiltros{
+    align-self: center;
+}
 /*PAGINA /REGISTRO*/
-
+/*PAGINA LOGIN*/
+.login{
+    padding: 5%;
+    /*max-width: 700px;*/
+    width: 50vw;
+    margin-left: 25vw;
+    margin-right: 25vw;
+}
 
 
 /*Responsividade*/
@@ -223,6 +234,18 @@ body{
     }
     .index-blocos .index-bloco{
         min-width: 100%;
+    }
+    .filtros{
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        
+    }
+    .filtros form{
+        flex-direction: column;
+    }
+    .limparFiltros{
+
     }
 }
 
