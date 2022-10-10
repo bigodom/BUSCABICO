@@ -5,32 +5,32 @@
     <img src="../static/BuscaBicoLogo.jpeg" style="width: 166px; height: 52px;" alt="">
   </a>
 </nav>
-<div class="login">
+<div class="login cadastro">
   <h1>Cadastre seu serviço</h1>
         <form action="{{ url_for('criar') }}" method="post">
           <fieldset>
             <div class="form-group">
               <label for="nome">Nome</label>
-              <input type="text" id="nome" name="nome" class="form-control">
+              <input type="text" id="nome" name="nome" class="form-control preencher">
             </div>
             <div class="form-group">
               <label for="sobrenome">Sobrenome</label>
-              <input type="text" id="sobrenome" name="sobrenome" class="form-control">
+              <input type="text" id="sobrenome" name="sobrenome" class="form-control preencher">
             </div>
             <div class="form-group">
               <label for="trabalho">Trabalho</label>
-              <input type="text" id="trabalho" name="trabalho" class="form-control">
+              <input type="text" id="trabalho" name="trabalho" class="form-control preencher">
             </div>
             <div class="form-group">
               <label for="endereco">Estado, Cidade, Bairro. Ex: MG, João Monlevade, Carneirinhos</label>
-              <input type="text" id="endereco" name="endereco" class="form-control">
+              <input type="text" id="endereco" name="endereco" class="form-control preencher">
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" class="form-control">
+              <input type="email" id="email" name="email" class="form-control preencher">
             </div>
             
-            <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+            <button type="submit" class="btn btn-primary btn-salvar" style="margin-top: 10px;">Salvar</button>
           </fieldset>
         </form>
 </div>

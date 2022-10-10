@@ -3,7 +3,10 @@ body{
     background: #27262C;
     color: white;
 }
-
+.preencher {
+    background: #47474c;
+    color: white;
+}
 /* PAGINA PRINCIPAL */
 .navbuttons{
     gap: 1vw;
@@ -154,16 +157,47 @@ body{
 .limparFiltros{
     align-self: center;
 }
-/*PAGINA /REGISTRO*/
-/*PAGINA LOGIN*/
-.login{
-    padding: 5%;
-    /*max-width: 700px;*/
-    width: 50vw;
-    margin-left: 25vw;
-    margin-right: 25vw;
-}
 
+/*PAGINA LOGIN*/
+.todoLogin{
+    display: flex;
+    height: 50%;
+}
+.login{
+    /*max-width: 700px;*/
+    width: 50%;
+    padding: 5%;
+    
+}
+.login2{
+
+    align-self: center;
+    text-align: center;
+    
+}
+.imglogin{
+    border-top: 10vw;
+    width: 40vw;
+    height: 40vw;
+}
+.botaoEntrar{
+    background: #6D7549;
+    border: none;
+    width: 200px;
+}
+.botaoRegistrar{
+    background: #1c78bb;
+    border: none;
+    width: 200px;
+}
+/*PAGINA /cadastro*/
+.cadastro{
+    padding: 5%;
+    margin: 0%;
+    width: 100vw;
+    padding-left: 25%;
+    padding-right: 25%;
+}
 
 /*Responsividade*/
 @media (max-width: 700px) {
@@ -246,6 +280,11 @@ body{
     }
     .limparFiltros{
 
+    }
+    .login2{
+        display: none;
+        width: 50%;
+        background: linear-gradient(122.33deg, #6D7549 30.62%, #1c78bb 100%);
     }
 }
 
