@@ -24,16 +24,19 @@
       <img src="../static/BuscaBicoLogo.jpeg" style="width: 166px; height: 52px;" alt="">
     </a>
   </nav>
-
+<div class="todoLogin">
 <div class="login">
-    <h1>Faça seu login</h1>
+    <h1 style="border-bottom: 4vw;">Faça seu login</h1>
         <form method="POST" action="{{ url_for('autenticar') }}">
             <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
-            <p><label for="email">Email:</label> <input class="form-control" type="text" id="email" name="email" required></p>
-            <p><label for="senha">Senha:</label> <input class="form-control" type="password" id="senha" name="senha" required></p>
-            <p><button class="btn btn-primary" type="submit">Entrar</button></p>
+            <p><label for="email">Email:</label> <input class="form-control preencher" type="email" id="email" name="email" required></p>
+            <p><label for="senha">Senha:</label> <input class="form-control preencher" type="password" id="senha" name="senha" required></p>
+            <p><button class="btn btn-primary botaoEntrar" type="submit">Entrar</button></p>
             
         </form>
-        <a href="/registro"><p><button class="btn btn-primary" type="submit">Registar</button></p></a>
+        <p>Não possui uma conta?</p>
+        <a href="/registro"><p><button class="btn btn-primary botaoRegistrar" type="submit">Registar</button></p></a>
+</div>
+<div class="login2"><img src="../static/fotologinregistro.png" alt="" class="imglogin"></div>
 </div>
 {% endblock %}

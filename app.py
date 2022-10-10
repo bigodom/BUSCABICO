@@ -76,22 +76,35 @@ def index():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
-    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho)
+    endereco = (
+        f'''
+        SELECT endereco
+        FROM trabalhador
+        '''
+    )
+    try:
+        endereco = selecao(connection, endereco)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
 
 
-@app.route('/index_filtro')
-def index():
-    if 'usuario_logado' not in session or session['usuario_logado'] is None:
-        return redirect(url_for('login', proxima=url_for('cadastro')))
+@app.route('/index_filtro_servico', methods=['POST'])
+def index_filtro_servico():
 
-    tipoTrabalho
+
+    if request.method == 'POST':
+        trabalhoFiltro = request.form['trabalhoFiltro']
+
+
     trabalhador = (
     f'''
     SELECT * 
     FROM trabalhador t, oferece o
-    WHERE t.fk_uemail = o.fk_temail AND o.tipo = {tipoTrabalho};
+    WHERE t.fk_uemail = o.fk_temail AND o.fk_trabalhador_tipo iLIKE '{trabalhoFiltro}';
     ''')
-    
+
     try:
         trabalhador = selecao(connection, trabalhador)
     except OperationalError as e:
@@ -108,7 +121,62 @@ def index():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
-    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho)
+    endereco = (
+        f'''
+        SELECT endereco
+        FROM trabalhador
+        '''
+    )
+    try:
+        endereco = selecao(connection, endereco)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
+
+
+@app.route('/index_filtro_endereco', methods=['POST'])
+def index_filtro_endereco():
+
+
+    if request.method == 'POST':
+        enderecoFiltro = request.form['enderecoFiltro']
+
+
+    trabalhador = (
+    f'''
+    SELECT * 
+    FROM trabalhador t, oferece o
+    WHERE t.fk_uemail = o.fk_temail AND t.endereco iLIKE '{enderecoFiltro}';
+    ''')
+    try:
+        trabalhador = selecao(connection, trabalhador)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    trabalho = (
+        f'''
+        SELECT *
+        FROM trabalho
+        '''
+    )
+    try:
+        trabalho = selecao(connection, trabalho)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    endereco = (
+        f'''
+        SELECT endereco
+        FROM trabalhador
+        '''
+    )
+    try:
+        endereco = selecao(connection, endereco)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
 
 
 @app.route('/cadastro')

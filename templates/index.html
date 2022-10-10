@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 {% block conteudo %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-fill">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-fill" style="color: black;">
     <a class="navbar-brand" href="/" style="padding-left: 3%;">
       <img src="../static/BuscaBicoLogo.jpeg" style="width: 166px; height: 52px;" alt="">
     </a>
@@ -9,32 +9,44 @@
     <h1 style="text-align: center; margin: 5vw;">{{ titulo }}</h1>
 </div>
 
-<div class="dropdown" style="display: flex; justify-content: center; padding-bottom: 8vw;">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Filtre por tipo de serviço
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        {% for trabalho in trabalho %}
-        <a class="dropdown-item" href="#" >{{ trabalho[0] }}</a>
-        {% endfor %}
-    </div>
+ <div class="filtros">
+        <form action="/index_filtro_servico" method="post" style="display: flex;  gap: 10px;">
+        <select method="post" class="form-control" name="trabalhoFiltro" style="border-radius: 10px; width: 100px;">
+          {% for trabalho in trabalho %}
+          <option style="width: 54px;">{{ trabalho[0] }}</option>
+          {% endfor %}
+          
+        </select>
+        <input type="submit" name="acao" value="filtrar" style="border-radius: 10px;">
+        </form>
+        <form action="/index_filtro_endereco" method="post" style="display: flex; gap: 10px;">
+          <select method="post" class="form-control" name="enderecoFiltro" style="border-radius: 10px; width: 100px;">
+            {% for endereco in endereco %}
+            <option>{{ endereco[0] }}</option>
+            {% endfor %}
+            
+          </select>
+          <input type="submit" name="acao" value="filtrar" style="border-radius: 10px;">
+          </form>
+          <div class="limparFiltros" style=""><a href="/index"><button style="border-radius: 10px;">Limpar filtros</button></a></div>
   </div>
+
 
 {% for trabalhador in trabalhador %}
 <div class="container index-blocos">
-    <div class="index-nome-trabalhador index-bloco">
+    <div class="index-nome-trabalhador index-bloco" style="gap: 10px;">
         <h5>{{ trabalhador[1] }} {{ trabalhador[2] }}</h1>
-        <h5>{{ trabalhador[5] }}</h5>
+        <h5 style="color: rgb(17, 17, 110)">{{ trabalhador[5] }}</h5>
     </div>
-    <div class="index-endereco index-bloco">
+    <div class="index-endereco index-bloco" style="color: white; gap: 10px;">
         <h5>Endereço</h1>
         <p>{{ trabalhador[3] }}</p>
     </div>
-    <div class="index-email index-bloco">
+    <div class="index-email index-bloco" style="color: white; gap: 10px;">
         <h5>Email</h1>
         <p>{{ trabalhador[4] }}</p>
     </div>
-    <div class="index-data-cadastro index-bloco">
+    <div class="index-data-cadastro index-bloco" style="color: white; gap: 10px;">
         <h5>Data de Cadastro</h1>
         <p>{{ trabalhador[0] }}</p>
     </div>
