@@ -188,7 +188,7 @@ def index_favoritos():
     f'''
     SELECT t.data_cadastro, t.pnome, t.unome, t.endereco, t.fk_uemail, o.fk_trabalhador_tipo
     FROM trabalhador t, favorita f, oferece o
-    WHERE f.fk_uemail = 'pedro@malvadao.com' and t.fk_uemail = f.fk_temail
+    WHERE f.fk_uemail = '{session['email']}' and t.fk_uemail = f.fk_temail
     and t.fk_uemail = o.fk_temail
     ''')
     
