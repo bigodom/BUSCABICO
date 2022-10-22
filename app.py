@@ -239,7 +239,6 @@ def criar():
         sobrenome = request.form['sobrenome']
         trabalho = request.form['trabalho']
         endereco = request.form['endereco']
-        email = request.form['email']
     
     today = date.today()
 
@@ -255,14 +254,11 @@ def criar():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
-
-
-
     confereEmail = (
         f'''
         SELECT  t.fk_uemail
         FROM    trabalhador t
-        WHERE   t.fk_uemail like '{email}'
+        WHERE   t.fk_uemail like '{session['email']}'
         '''
     )
     try:
@@ -270,12 +266,23 @@ def criar():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
     if resultado:
-        echo("O email ja foi cadastrado.")
+        cadastro2 = (
+        f'''
+        INSERT INTO oferece
+        VALUES ('{trabalho}', '{session['email']}', 'TRUE')
+        '''
+        )
+        try:
+            execute_query(connection, cadastro2)
+        except OperationalError as e:
+            echo(f'O erro {e} ocorreu. Tente novamente.')
+        return redirect(url_for('index'))
+        
     else:
         cadastroTrabalhador = (
         f'''
         INSERT INTO Trabalhador
-        VALUES ('{today}', '{nome}', '{sobrenome}', '{endereco}', '{email}')
+        VALUES ('{today}', '{nome}', '{sobrenome}', '{endereco}', '{session['email']}')
         '''
         ) 
         try:
@@ -285,7 +292,7 @@ def criar():
         cadastro2 = (
         f'''
         INSERT INTO oferece
-        VALUES ('{trabalho}', '{email}', 'TRUE')
+        VALUES ('{trabalho}', '{session['email']}', 'TRUE')
         '''
         )
         try:
@@ -293,13 +300,6 @@ def criar():
         except OperationalError as e:
             echo(f'O erro {e} ocorreu. Tente novamente.')
         return redirect(url_for('index'))
-
-
-
-    #cadastro = Cadastro(nome, trabalho, cidade, bairro, telefone)
-    #lista.append(cadastro)
-    flash('Email já cadastrado')
-    return redirect(url_for('cadastro'))
 
 
 @app.route('/login')
