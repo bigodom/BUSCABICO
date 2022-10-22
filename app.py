@@ -45,6 +45,8 @@ connection = create_connection()
 
 @app.route('/')
 def principal():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        return render_template('principal.html', display = 'style = display:none;')
     return render_template('principal.html')
 
 

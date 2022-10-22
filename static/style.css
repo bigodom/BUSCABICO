@@ -13,7 +13,7 @@ body{
 }
 .ache-emprego{
     margin: 2%;
-    margin-top: 10vw;
+    margin-top: 5vw;
     display: flex;
     align-items: center;
 }
@@ -29,8 +29,15 @@ body{
     font-size: 1.3rem;
 }
 .ache-emprego .botao-principal{
-    display: flex;
     justify-content: space-around;
+    max-height: fit-content;
+}
+.container2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5vw;
+    width: 50%;
 }
 
 .tutorial{
@@ -38,7 +45,7 @@ body{
     justify-content: center;
     -ms-flex-align: center;
     gap: 1.5vw;
-    margin-top: 10vw;
+    margin-top: 5vw;
 }
 .tutorial .blocos{
     width: 260px;
@@ -218,6 +225,7 @@ body{
     .ache-emprego .botao-principal{
         flex-direction: column;
         justify-content: space-around;
+        text-align: center;
     }
     .tutorial{
         flex-direction: column;
@@ -255,6 +263,9 @@ body{
         display: -webkit-box;
         text-align: center;
     }
+    .container2{
+        width: 80%;
+    }
     /*PAGINA LOGIN*/
     .login{
         padding: 5%;
@@ -277,9 +288,6 @@ body{
     }
     .filtros form{
         flex-direction: column;
-    }
-    .limparFiltros{
-
     }
     .login2{
         display: none;
