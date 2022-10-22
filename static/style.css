@@ -155,14 +155,37 @@ body{
 }
 .filtros{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     max-width: 80%;
     align-self: center;
     padding-left: 20%;
     padding-bottom: 8vw;
+    flex-direction: column;
+    gap: 20px;
 }
 .limparFiltros{
     align-self: center;
+}
+.botaoFiltro{
+    background-color: #ffffbf;
+    color: black;
+    border-radius: 10px;
+    width: 150px;
+    height: 45px;
+    text-align: center;
+    border: 0;
+}
+.botoesFiltro{
+    display: flex;
+    align-self: center;
+    gap: 5vw;
+}
+.botoesFiltro2{
+    display: flex;
+    gap: 5px;
+}
+.botoesFiltroR{
+    gap: 15vw;
 }
 
 /*PAGINA LOGIN*/
@@ -293,6 +316,9 @@ body{
         display: none;
         width: 50%;
         background: linear-gradient(122.33deg, #6D7549 30.62%, #1c78bb 100%);
+    }
+    .botoesFiltroR{
+        gap: 5vw;
     }
 }
 
