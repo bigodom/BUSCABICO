@@ -181,6 +181,48 @@ def index_filtro_endereco():
     return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
 
 
+@app.route('/index_usuario')
+def index_usuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        return redirect(url_for('login', proxima=url_for('cadastro')))
+
+    trabalhador = (
+    f'''
+    SELECT * 
+    FROM trabalhador t, oferece o
+    WHERE t.fk_uemail = o.fk_temail AND t.fk_uemail = '{session['email']}';
+    ''')
+    
+    try:
+        trabalhador = selecao(connection, trabalhador)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    trabalho = (
+        f'''
+        SELECT *
+        FROM trabalho
+        '''
+    )
+    try:
+        trabalho = selecao(connection, trabalho)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    endereco = (
+        f'''
+        SELECT endereco
+        FROM trabalhador
+        '''
+    )
+    try:
+        endereco = selecao(connection, endereco)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
+
+
 @app.route('/index_favoritos')
 def index_favoritos():
     if 'usuario_logado' not in session or session['usuario_logado'] is None:
@@ -188,7 +230,7 @@ def index_favoritos():
 
     trabalhador = (
     f'''
-    SELECT t.data_cadastro, t.pnome, t.unome, t.endereco, t.fk_uemail, o.fk_trabalhador_tipo
+    SELECT t.data_cadastro, t.pnome, t.unome, t.telefone, t.endereco, t.fk_uemail, o.fk_trabalhador_tipo
     FROM trabalhador t, favorita f, oferece o
     WHERE f.fk_uemail = '{session['email']}' and t.fk_uemail = f.fk_temail
     and t.fk_uemail = o.fk_temail
@@ -239,6 +281,7 @@ def criar():
         sobrenome = request.form['sobrenome']
         trabalho = request.form['trabalho']
         endereco = request.form['endereco']
+        telefone = request.form['telefone']
     
     today = date.today()
 
@@ -282,7 +325,7 @@ def criar():
         cadastroTrabalhador = (
         f'''
         INSERT INTO Trabalhador
-        VALUES ('{today}', '{nome}', '{sobrenome}', '{endereco}', '{session['email']}')
+        VALUES ('{today}', '{nome}', '{sobrenome}', '{telefone}', '{endereco}', '{session['email']}')
         '''
         ) 
         try:
