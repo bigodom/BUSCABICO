@@ -7,6 +7,14 @@ body{
     background: #47474c;
     color: white;
 }
+.preencher2 {
+    background: #6e82a3;
+    color: black;
+    border-color: black;
+}
+.butaum{
+    text-align: center;
+}
 /* PAGINA PRINCIPAL */
 .navbuttons{
     gap: 1vw;
@@ -159,7 +167,7 @@ body{
     max-width: 80%;
     align-self: center;
     padding-left: 20%;
-    padding-bottom: 8vw;
+    padding-bottom: 5vw;
     flex-direction: column;
     gap: 20px;
 }

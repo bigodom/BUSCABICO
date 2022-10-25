@@ -5,45 +5,53 @@
       <img src="../static/BuscaBicoLogo.png" style="width: 166px; height: 52px;" alt="">
     </a>
   </nav>
-<div class="fotoFundo">
-  <div class="page-header">
+<div class="page-header">
     <h1 style="text-align: center; margin: 5vw; color: #ffffbf;">{{ titulo }}</h1>
 </div>
 
  <div class="filtros">
 
-        <div class="botoesFiltro">
+        <div class="botoesFiltro" style="display: none;">
           <form action="/index_filtro_servico" method="post" class="botoesFiltro2">
-            <select method="post" class="botaoFiltro"  name="trabalhoFiltro">
+            <select method="post" class=" botaoFiltro" name="trabalhoFiltro">
               {% for trabalho in trabalho %}
               <option style="width: 54px;">{{ trabalho[0] }}</option>
               {% endfor %}
             </select>
-            <input type="submit" name="acao" class="botaoFiltro" style="background-color: #6e82a3; color: white;" value="filtrar">
+            <input type="submit" name="acao" class="botaoFiltro" value="filtrar">
             </form>
   
           <form action="/index_filtro_endereco" method="post" class="botoesFiltro2">
-            <select method="post" class="botaoFiltro"  name="enderecoFiltro">
+            <select method="post" class="botaoFiltro" name="enderecoFiltro">
               {% for endereco in endereco %}
               <option>{{ endereco[0] }}</option>
               {% endfor %} 
               </select>
-            <input type="submit" name="acao" style="background-color: #6e82a3; color: white;" class="botaoFiltro" value="filtrar">
+            <input type="submit" name="acao" class="botaoFiltro" value="filtrar">
             </form>
         </div>
 
         <div class="botoesFiltro botoesFiltroR">
-          <div class="limparFiltros"><a href="/index"><button class="botaoFiltro" style="background-color: lightblue;">Limpar filtros</button></a></div>
-          <div class="limparFiltros"><a href="/index_favoritos"><button class="botaoFiltro" style="background-color: lightblue;">Listar favoritos</button></a></div>
+            <div class="limparFiltros" style="display: none;"><a href="/index"><button class="botaoFiltro">Limpar filtros</button></a></div>
+            <div class="limparFiltros" style="display: none;"><a href="/index_favoritos"><button class="botaoFiltro">Listar favoritos</button></a></div>
         </div>
-        <div class="botoesFiltro" style="padding-left: 15vw;">
-          <a href="/index_usuario"><button class="botaoFiltro" style="width: 200px; background-color: rgb(213, 233, 216);">Listar meus cadastros</button></a>
-          <img src="../static/fundoIndex.png" alt="" style="width: 10vw; align-self: center;">
+        <div class="botoesFiltro">
+            <a href="/index"><button class="botaoFiltro" style="width: 200px;">Voltar aos cadastrados</button></a>
         </div>
-
+        <div class="botoesFiltro">
+            <form action="{{ url_for('deletar') }}" method="post">
+                <fieldset>
+                  <div class="form-group" style="text-align: center;">
+                    <label for="servico"><p style="font-size: 18px;">Digite o serviço que deseja deletar:</p></label>
+                    <input type="text" id="servico" name="servico" class="form-control preencher2">
+                    <button type="submit" class="btn btn-salvar butaum btn-secondary" style="margin-top: 10px;">Deletar</button>
+                  </div>
+                  
+                </fieldset>
+              </form>
+        </div>
   </div>
 
-</div>
 
 {% for trabalhador in trabalhador %}
 <div class="container index-blocos">

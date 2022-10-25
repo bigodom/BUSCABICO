@@ -220,7 +220,44 @@ def index_usuario():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
-    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
+    return render_template('index2.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
+
+
+@app.route('/deletar', methods=['POST'])
+def deletar():
+
+    if request.method == 'POST':
+        servico = request.form['servico']
+    
+    verifica = (
+        f'''
+            SELECT *
+            FROM oferece o
+            WHERE o.fk_trabalhador_tipo like '{servico}' AND o.fk_temail = '{session['email']}'; 
+        '''
+    )
+    try:
+        verifica = selecao(connection, verifica)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    if verifica == None:
+        echo(f'O serviço não esta cadastrado!')
+    else:
+        
+        teste = (
+            f'''
+                DELETE 
+                FROM oferece o
+                WHERE o.fk_trabalhador_tipo like '{servico}' AND o.fk_temail = '{session['email']}';
+            '''
+        )
+        try:
+            execute_query(connection, teste)
+        except OperationalError as e:
+            echo(f'O erro {e} ocorreu. Tente novamente.')
+
+        return redirect(url_for('index_usuario'))
 
 
 @app.route('/index_favoritos')
@@ -405,6 +442,7 @@ def registrar():
                 return render_template('login.html')
 
     return render_template('registro.html')
+
 
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
