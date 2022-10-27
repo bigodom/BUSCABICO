@@ -62,7 +62,8 @@ def index():
     f'''
     SELECT * 
     FROM trabalhador t, oferece o
-    WHERE t.fk_uemail = o.fk_temail;
+    WHERE t.fk_uemail = o.fk_temail
+    ORDER BY t.data_cadastro ASC;
     ''')
     
     try:
@@ -108,7 +109,8 @@ def index_filtro_servico():
     f'''
     SELECT * 
     FROM trabalhador t, oferece o
-    WHERE t.fk_uemail = o.fk_temail AND o.fk_trabalhador_tipo iLIKE '{trabalhoFiltro}';
+    WHERE t.fk_uemail = o.fk_temail AND o.fk_trabalhador_tipo iLIKE '{trabalhoFiltro}'
+    ORDER BY t.data_cadastro ASC;
     ''')
 
     try:
@@ -153,7 +155,8 @@ def index_filtro_endereco():
     f'''
     SELECT * 
     FROM trabalhador t, oferece o
-    WHERE t.fk_uemail = o.fk_temail AND t.endereco iLIKE '{enderecoFiltro}';
+    WHERE t.fk_uemail = o.fk_temail AND t.endereco iLIKE '{enderecoFiltro}'
+    ORDER BY t.data_cadastro ASC;
     ''')
     try:
         trabalhador = selecao(connection, trabalhador)
@@ -277,6 +280,7 @@ def index_favoritos():
     FROM trabalhador t, favorita f, oferece o
     WHERE f.fk_uemail = '{session['email']}' and t.fk_uemail = f.fk_temail
     and t.fk_uemail = o.fk_temail
+    ORDER BY t.data_cadastro ASC;
     ''')
     
     try:
