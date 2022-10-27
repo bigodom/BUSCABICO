@@ -46,7 +46,8 @@
 </div>
 
 {% for trabalhador in trabalhador %}
-<div class="container index-blocos">
+<form action="/favoritar" method="post">
+  <div class="container index-blocos">
     <div class="index-nome-trabalhador index-bloco" style="gap: 10px;">
         <h5>{{ trabalhador[1] }} {{ trabalhador[2] }}</h1>
         <h5 style="color: rgb(17, 17, 110)">{{ trabalhador[6] }}</h5>
@@ -63,7 +64,18 @@
         <h5>Data de Cadastro</h1>
         <p>{{ trabalhador[0] }}</p>
     </div>
+    <div style="align-self: center; padding: 1%; {{botaoFavoritar}}">
+      <a href="/favoritar">
+        <button type="submit" class="btn btn-light">Favoritar</button>
+      </a>
+      <input type="hidden" name="emailTrabalhador" value = "{{trabalhador[5]}}">
+      
+      
+    </div>
 </div>
+
+
+</form>
 {% endfor %}
 
 {% endblock %}

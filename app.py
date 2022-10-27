@@ -43,6 +43,9 @@ def execute_query (connection, query):
 connection = create_connection()
 
 
+mostrar = 'display: block;'
+esconder = 'display: none;'
+
 @app.route('/')
 def principal():
     if 'usuario_logado' not in session or session['usuario_logado'] is None:
@@ -89,7 +92,8 @@ def index():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
-    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
+
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco, botaoFavoritar = mostrar)
 
 
 @app.route('/index_filtro_servico', methods=['POST'])
@@ -134,7 +138,7 @@ def index_filtro_servico():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
-    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco, botaoFavoritar = mostrar)
 
 
 @app.route('/index_filtro_endereco', methods=['POST'])
@@ -178,7 +182,7 @@ def index_filtro_endereco():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
-    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco, botaoFavoritar = mostrar)
 
 
 @app.route('/index_usuario')
@@ -300,7 +304,7 @@ def index_favoritos():
     except OperationalError as e:
         echo(f'O erro {e} ocorreu. Tente novamente.')
 
-    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco)
+    return render_template('index.html', titulo='Cadastrados', trabalhador=trabalhador, trabalho = trabalho, endereco = endereco, botaoFavoritar = esconder)
 
 
 @app.route('/cadastro')
@@ -459,7 +463,11 @@ def autenticar():
         '''
     )
 
-    confere = selecao(connection, consulta)
+    try:
+        confere = selecao(connection, consulta)
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+    
     if confere:
         session.permanent = True
         session['email'] = email
@@ -480,5 +488,27 @@ def logout():
         session['usuario_logado'] = None
         flash('logout efetuado com sucesso')
         return redirect(url_for('principal'))
+
+
+@app.route('/favoritar', methods=['POST'])
+def favorita():
+    if request.method == 'POST':
+        emailTrabalhador = request.form['emailTrabalhador']
+
+    favoritar = (
+    f'''
+        INSERT INTO favorita
+        VALUES('{session['email']}', '{emailTrabalhador}')
+    '''
+    )
+
+    try:
+        execute_query(connection, favoritar)
+        echo(f'deu certo')
+    except OperationalError as e:
+        echo(f'O erro {e} ocorreu. Tente novamente.')
+
+    return redirect(url_for('index'))
+
 
 app.run(debug=True)
