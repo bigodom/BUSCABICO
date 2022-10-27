@@ -262,6 +262,8 @@ def deletar():
             echo(f'O erro {e} ocorreu. Tente novamente.')
 
         return redirect(url_for('index_usuario'))
+    
+    return redirect(url_for('index_usuario'))
 
 
 @app.route('/index_favoritos')
